@@ -1,0 +1,50 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+:root {
+  --color: blueviolet;
+}
+
+@layer components {
+  .ding {
+    color: var(--color);
+  }
+  .ding1 {
+    color: yellowgreen;
+  }
+  .style-3d {
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+  }
+  .translate-z-10 {
+    transform: translateZ(10px);
+  }
+  .translate-z-20 {
+    transform: translateZ(20px);
+  }
+  .translate-z-30 {
+    transform: translateZ(30px);
+  }
+  .shadow-bulge {
+    box-shadow: -5px -5px 5px 0 rgba(216, 216, 216, 0.1),
+      5px 5px 5px 0 rgba(0, 0, 0, 0.1),
+      0 0 10px 0 rgba(100, 100, 100, 0.1) inset;
+    background-color: transparent;
+  }
+  .shadow-bulge-inset {
+    box-shadow: -3px -3px 3px 0 rgba(216, 216, 216, 0.1) inset,
+      3px 3px 3px 0 rgba(0, 0, 0, 0.1) inset,
+      0 0 10px 0 rgba(100, 100, 100, 0.1);
+  }
+}
+.ant-input {
+  border: 0;
+
+  &:focus {
+    border: 0;
+    box-shadow: -5px -5px 5px 0 rgba(216, 216, 216, 0.1) inset,
+      5px 5px 5px 0 rgba(0, 0, 0, 0.1) inset,
+      0 0 10px 0 rgba(100, 100, 100, 0.1);
+  }
+}
