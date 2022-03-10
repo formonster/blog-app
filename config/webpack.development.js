@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
 module.exports = {
     output: {
-        filename: "[name].js",
+        filename: "scripts/[name].js",
     },
     watch: true,
     plugins: [

@@ -67,16 +67,16 @@ class Touch {
         if (!this.moveHandler) return;
         this.unListenMove();
         if (os.isPc) {
-            document.body.addEventListener("mousemove", this.move, false);
+            this.container.addEventListener("mousemove", this.move, false);
         } else {
-            document.body.addEventListener("touchmove", this.move, false);
+            this.container.addEventListener("touchmove", this.move, false);
         }
     }
     unListenMove = () => {
         if (os.isPc) {
-            document.body.removeEventListener("mousemove", this.move, false);
+            this.container.removeEventListener("mousemove", this.move, false);
         } else {
-            document.body.removeEventListener("touchmove", this.move, false);
+            this.container.removeEventListener("touchmove", this.move, false);
         }
     }
     start = (e: MouseEvent | TouchEvent) => {

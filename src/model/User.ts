@@ -8,17 +8,17 @@
 // match the expected interface, even if the JSON is valid.
 
 export interface User {
-    id: string;
-    code: string;
-    name: string;
-    head: string;
-    account: string;
-    password: string;
-    email: string;
+    id:          string;
+    code:        string;
+    name:        string;
+    head:        string;
+    account:     string;
+    password:    string;
+    email:       string;
     create_time: number;
-    is_delete: number;
+    is_delete:   number;
     is_disabled: number;
-    is_super: number;
+    is_super:    number;
 }
 
 // Converts JSON strings to/from your types
@@ -37,7 +37,7 @@ function invalidValue(typ: any, val: any, key: any = ''): never {
     if (key) {
         throw Error(`Invalid value for key "${key}". Expected type ${JSON.stringify(typ)} but got ${JSON.stringify(val)}`);
     }
-    throw Error(`Invalid value ${JSON.stringify(val)} for type ${JSON.stringify(typ)}`,);
+    throw Error(`Invalid value ${JSON.stringify(val)} for type ${JSON.stringify(typ)}`, );
 }
 
 function jsonToJSProps(typ: any): any {
@@ -71,7 +71,7 @@ function transform(val: any, typ: any, getProps: any, key: any = ''): any {
             const typ = typs[i];
             try {
                 return transform(val, typ, getProps);
-            } catch (_) { }
+            } catch (_) {}
         }
         return invalidValue(typs, val);
     }
@@ -128,9 +128,9 @@ function transform(val: any, typ: any, getProps: any, key: any = ''): any {
     if (Array.isArray(typ)) return transformEnum(typ, val);
     if (typeof typ === "object") {
         return typ.hasOwnProperty("unionMembers") ? transformUnion(typ.unionMembers, val)
-            : typ.hasOwnProperty("arrayItems") ? transformArray(typ.arrayItems, val)
-                : typ.hasOwnProperty("props") ? transformObject(getProps(typ), typ.additional, val)
-                    : invalidValue(typ, val);
+            : typ.hasOwnProperty("arrayItems")    ? transformArray(typ.arrayItems, val)
+            : typ.hasOwnProperty("props")         ? transformObject(getProps(typ), typ.additional, val)
+            : invalidValue(typ, val);
     }
     // Numbers can be parsed by Date but shouldn't be.
     if (typ === Date && typeof val !== "number") return transformDate(val);
@@ -158,7 +158,7 @@ function o(props: any[], additional: any) {
 }
 
 function m(additional: any) {
-    return { additional };
+    return { props: [], additional };
 }
 
 function r(name: string) {

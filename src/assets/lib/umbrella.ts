@@ -53,9 +53,28 @@ class Umbrella {
             this.disable = true;
         } else this.disable = false;
     }
+    getScreenLeft(target: HTMLDivElement) {
+        let _target = target;
+        let left = 0;
+        while (_target.nodeName !== "BODY" && _target.offsetParent) {
+            left += _target.offsetLeft;
+            _target = _target.offsetParent as HTMLDivElement
+        }
+        return left
+    }
+    getScreenTop(target: HTMLDivElement) {
+        let _target = target;
+        let top = 0;
+        while (_target.nodeName !== "BODY" && _target.offsetParent) {
+            top += _target.offsetTop;
+            _target = _target.offsetParent as HTMLDivElement
+        }
+        return top
+    }
     touchListener(target: HTMLDivElement, scene: HTMLDivElement, rotate: { x: number, y: number }, hover: HoverType) {
         var width = target.clientWidth;
         var height = target.clientHeight;
+
         var _ = this;
         var _x = rotate.x;
         var _y = rotate.y;
@@ -67,23 +86,24 @@ class Umbrella {
                 if (_.disable) return;
 
                 if (hover) {
+                    const targetRect = target.getBoundingClientRect();
 
-                    if (typeof hover !== "object") throw new Error("hover 参数格式错误");
-                    if (!hover.angle) hover.angle = 10;
+                    const angle = typeof hover === "object" ? hover.angle : 10
 
                     let widthHalf = width / 2;
-                    let yPer = (e.position.x - widthHalf) / widthHalf
-                    _y = hover.angle * yPer;
+                    let yPer = (e.position.x - targetRect.left - widthHalf) / widthHalf
+                    _y = angle * yPer;
 
                     let heightHalf = height / 2;
-                    let xPer = (e.position.y - heightHalf) / heightHalf
-                    _x = hover.angle * xPer;
+                    let xPer = (e.position.y - targetRect.top - heightHalf) / heightHalf
+                    _x = angle * xPer;
                     scene.style.transform = `rotateX(${_x}deg) rotateY(${_y}deg) rotateZ(0deg)`;
                     return;
                 }
 
                 _x = rotate.x - _.slowDown(e.offset.y, _.speed);
                 _y = rotate.y + _.slowDown(e.offset.x, _.speed);
+
                 if (_x >= 90) _x = 90;
                 if (_x <= -90) _x = -90;
                 scene.style.transform = `rotateX(${_x}deg) rotateY(${_y}deg) rotateZ(0deg)`;

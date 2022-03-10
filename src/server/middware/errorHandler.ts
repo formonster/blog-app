@@ -17,9 +17,9 @@ const errorHandler = async (ctx: Router.RouterContext, next: () => Promise<unkno
 
         if (error.isAxiosError) {
             // 错误处理
-            console.log("💥", JSON.stringify(error.response.data.message));
-            errorLogger.error("💥", error.response.data.message);
-            ctx.body = resError(error.response.data.message);
+            console.log("💥", JSON.stringify(error.response?.data.message));
+            errorLogger.error("💥", error.response?.data.message);
+            ctx.body = resError(error.response?.data.message);
             return;
         }
         console.log("💥", JSON.stringify(error.message));

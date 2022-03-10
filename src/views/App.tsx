@@ -2,11 +2,13 @@ import React from "react";
 import { renderRoutes } from "react-router-config";
 import { Route, Switch } from "react-router-dom";
 import { RecoilRoot } from "recoil";
+import Popup from "@/views/popup";
 import routes from "./router";
 
 export default function App() {
   return (
     <RecoilRoot>
+      <Popup />
       <Route
         render={({ location }) => (
           // prefetch 暂时注释（原因参考 router.ts）

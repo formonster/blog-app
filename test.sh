@@ -1,0 +1,1 @@
+sed -i '' '\/\/# sourceMappingURL/d' *.txt

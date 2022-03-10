@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.22.4/libexec/bin/yarn.js add @types/quicklink
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.22.4/libexec/bin/yarn.js add @types/react-dom.
 
 PATH: 
   /Users/for/Desktop/File/Flutter/flutter/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/for/Desktop/File/Flutter/flutter/bin:/Users/for/Library/Android/sdk/tools:/Users/for/Library/Android/sdk/tools/bin:/Users/for/Library/Android/sdk/platform-tools:/Users/for/Library/Android/sdk/emulator:/Users/for/Desktop/Tools/ffmpeg:/Users/for/Desktop/Tools/sonar-scanner-4.4.0.2170-macosx/bin:/usr/local/mysql/bin:/Users/for/Library/Android/sdk/tools:/Users/for/Library/Android/sdk/tools/bin:/Users/for/Library/Android/sdk/platform-tools:/Users/for/Library/Android/sdk/emulator:/Users/for/Desktop/Tools/ffmpeg:/Users/for/Desktop/Tools/sonar-scanner-4.4.0.2170-macosx/bin:/usr/local/mysql/bin:/Users/for/Desktop/File/Flutter/flutter/bin
@@ -8,22 +8,22 @@ Yarn version:
   1.22.4
 
 Node version: 
-  12.18.0
+  12.22.0
 
 Platform: 
   darwin x64
 
 Trace: 
-  Error: https://registry.npm.taobao.org/@types%2fquicklink: Not found
+  Error: https://registry.npm.taobao.org/@types%2freact-dom.: Not found
       at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:66987:18)
       at Request.self.callback (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:140748:22)
-      at Request.emit (events.js:315:20)
+      at Request.emit (events.js:314:20)
       at Request.<anonymous> (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:141720:10)
-      at Request.emit (events.js:315:20)
+      at Request.emit (events.js:314:20)
       at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:141642:12)
-      at Object.onceWrapper (events.js:421:28)
-      at IncomingMessage.emit (events.js:327:22)
-      at endReadableNT (_stream_readable.js:1221:12)
+      at Object.onceWrapper (events.js:420:28)
+      at IncomingMessage.emit (events.js:326:22)
+      at endReadableNT (_stream_readable.js:1241:12)
       at processTicksAndRejections (internal/process/task_queues.js:84:21)
 
 npm manifest: 
@@ -38,7 +38,7 @@ npm manifest:
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
       "client": "webpack --mode development",
-      "build": "webpack --mode production",
+      "client:build": "scripty",
       "dev": "tsnd --respawn --transpile-only src/server/app.ts",
       "cm": "ts-node scripts/createModel/index.ts",
       "ct": "ts-node scripts/createTableDesc/index.ts",
@@ -55,6 +55,7 @@ npm manifest:
       "@emotion/css": "^11.1.3",
       "@emotion/react": "^11.4.1",
       "@emotion/server": "^11.4.0",
+      "@types/co-body": "^6.1.0",
       "@types/js-md5": "^0.4.3",
       "@types/jsonwebtoken": "^8.5.5",
       "@types/koa-bodyparser": "^4.3.1",
@@ -72,6 +73,8 @@ npm manifest:
       "axios": "^0.21.1",
       "brotli": "^1.3.2",
       "classnames": "^2.3.1",
+      "co-body": "^6.1.0",
+      "cross-env": "^7.0.3",
       "gulp-webp": "^4.0.1",
       "highlight.js": "^11.2.0",
       "imagemin-webp": "^6.0.0",
@@ -89,6 +92,7 @@ npm manifest:
       "log4js": "^6.3.0",
       "marked": "^3.0.7",
       "module-alias": "^2.2.2",
+      "mv": "^2.1.1",
       "mysql": "^2.18.1",
       "quicklink": "^2.2.0",
       "quicktype-core": "^6.0.70",
@@ -100,7 +104,10 @@ npm manifest:
       "react-simple-code-editor": "^0.11.0",
       "recoil": "^0.4.1",
       "remark-gfm": "^3.0.0",
+      "scripty": "^2.0.0",
+      "source-map": "^0.7.3",
       "ts-node-dev": "^1.1.6",
+      "typescript": "^4.5.4",
       "uuid": "^8.3.2",
       "workbox-webpack-plugin": "^6.3.0"
     },
@@ -111,7 +118,8 @@ npm manifest:
       "@/store": "src/store",
       "@/utils": "src/utils",
       "@/config": "src/config",
-      "@/api": "src/api"
+      "@/api": "src/api",
+      "@/libs": "src/libs"
     },
     "devDependencies": {
       "@babel/core": "^7.15.0",
@@ -1818,6 +1826,14 @@ Lockfile:
     dependencies:
       "@types/node" "*"
   
+  "@types/co-body@^6.1.0":
+    version "6.1.0"
+    resolved "https://registry.npmmirror.com/@types/co-body/download/@types/co-body-6.1.0.tgz#b52625390eb0d113c9b697ea92c3ffae7740cdb9"
+    integrity sha1-tSYlOQ6w0RPJtpfqksP/rndAzbk=
+    dependencies:
+      "@types/node" "*"
+      "@types/qs" "*"
+  
   "@types/connect@*":
     version "3.4.34"
     resolved "https://registry.nlark.com/@types/connect/download/@types/connect-3.4.34.tgz"
@@ -2810,7 +2826,7 @@ Lockfile:
     resolved "https://registry.nlark.com/async-validator/download/async-validator-3.5.2.tgz"
     integrity sha1-aOhmqWgk6LJpT/eoMcGiXETV5QA=
   
-  async@~2.6.0:
+  async@^2.6.1, async@~2.6.0:
     version "2.6.3"
     resolved "https://registry.nlark.com/async/download/async-2.6.3.tgz?cache=0&sync_timestamp=1628206303171&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fasync%2Fdownload%2Fasync-2.6.3.tgz"
     integrity sha1-1yYl4jRKNlbjo61Pp0n6gymdgv8=
@@ -3566,9 +3582,9 @@ Lockfile:
       process-nextick-args "^2.0.0"
       readable-stream "^2.3.5"
   
-  co-body@^6.0.0:
+  co-body@^6.0.0, co-body@^6.1.0:
     version "6.1.0"
-    resolved "https://registry.npm.taobao.org/co-body/download/co-body-6.1.0.tgz"
+    resolved "https://registry.npm.taobao.org/co-body/download/co-body-6.1.0.tgz#d87a8efc3564f9bfe3aced8ef5cd04c7a8766547"
     integrity sha1-2HqO/DVk+b/jrO2O9c0Ex6h2ZUc=
     dependencies:
       inflation "^2.0.0"
@@ -3884,6 +3900,13 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/create-require/download/create-require-1.1.1.tgz"
     integrity sha1-wdfo8eX2z8n/ZfnNNS03NIdWwzM=
   
+  cross-env@^7.0.3:
+    version "7.0.3"
+    resolved "https://registry.npm.taobao.org/cross-env/download/cross-env-7.0.3.tgz?cache=0&sync_timestamp=1606855533528&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcross-env%2Fdownload%2Fcross-env-7.0.3.tgz#865264b29677dc015ba8418918965dd232fc54cf"
+    integrity sha1-hlJkspZ33AFbqEGJGJZd0jL8VM8=
+    dependencies:
+      cross-spawn "^7.0.1"
+  
   cross-spawn@^5.0.1:
     version "5.1.0"
     resolved "https://registry.npm.taobao.org/cross-spawn/download/cross-spawn-5.1.0.tgz"
@@ -3904,7 +3927,7 @@ Lockfile:
       shebang-command "^1.2.0"
       which "^1.2.9"
   
-  cross-spawn@^7.0.3:
+  cross-spawn@^7.0.1, cross-spawn@^7.0.3:
     version "7.0.3"
     resolved "https://registry.npm.taobao.org/cross-spawn/download/cross-spawn-7.0.3.tgz"
     integrity sha1-9zqFudXUHQRVUcF34ogtSshXKKY=
@@ -5508,6 +5531,17 @@ Lockfile:
       just-debounce "^1.0.0"
       normalize-path "^3.0.0"
       object.defaults "^1.1.0"
+  
+  glob@^6.0.1:
+    version "6.0.4"
+    resolved "https://registry.npmmirror.com/glob/download/glob-6.0.4.tgz#0f08860f6a155127b2fadd4f9ce24b1aab6e4d22"
+    integrity sha512-MKZeRNyYZAVVVG1oZeLaWie1uweH40m9AZwIwxyPbTSX4hHrVYSzLg0Ro5Z5R7XKkIX+Cc6oD1rqeDJnwsB8/A==
+    dependencies:
+      inflight "^1.0.4"
+      inherits "2"
+      minimatch "2 || 3"
+      once "^1.3.0"
+      path-is-absolute "^1.0.0"
   
   glob@^7.0.0, glob@^7.0.3, glob@^7.1.1, glob@^7.1.3, glob@^7.1.6:
     version "7.1.7"
@@ -7251,7 +7285,7 @@ Lockfile:
     resolved "https://registry.nlark.com/lodash.uniq/download/lodash.uniq-4.5.0.tgz"
     integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
   
-  lodash@^4.17.14, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21:
+  lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21:
     version "4.17.21"
     resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.21.tgz"
     integrity sha1-Z5WRxWTDv/quhFTPCz3zcMPWkRw=
@@ -8016,7 +8050,7 @@ Lockfile:
     dependencies:
       schema-utils "^3.1.0"
   
-  minimatch@^3.0.4:
+  "minimatch@2 || 3", minimatch@^3.0.4:
     version "3.0.4"
     resolved "https://registry.npm.taobao.org/minimatch/download/minimatch-3.0.4.tgz"
     integrity sha1-UWbihkV/AzBgZL5Ul+jbsMPTIIM=
@@ -8110,6 +8144,15 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/mute-stdout/download/mute-stdout-1.0.1.tgz"
     integrity sha1-rLAwDrTeI6fd7sAU4+lgRLNHIzE=
   
+  mv@^2.1.1:
+    version "2.1.1"
+    resolved "https://registry.npm.taobao.org/mv/download/mv-2.1.1.tgz#ae6ce0d6f6d5e0a4f7d893798d03c1ea9559b6a2"
+    integrity sha1-rmzg1vbV4KT32JN5jQPB6pVZtqI=
+    dependencies:
+      mkdirp "~0.5.1"
+      ncp "~2.0.0"
+      rimraf "~2.4.0"
+  
   mysql@^2.18.1:
     version "2.18.1"
     resolved "https://registry.npm.taobao.org/mysql/download/mysql-2.18.1.tgz"
@@ -8160,6 +8203,11 @@ Lockfile:
     version "1.0.2"
     resolved "https://registry.npm.taobao.org/napi-build-utils/download/napi-build-utils-1.0.2.tgz"
     integrity sha1-sf3cCyxG44Cgt6dvmE3UfEGhOAY=
+  
+  ncp@~2.0.0:
+    version "2.0.0"
+    resolved "https://registry.npm.taobao.org/ncp/download/ncp-2.0.0.tgz#195a21d6c46e361d2fb1281ba38b91e9df7bdbb3"
+    integrity sha1-GVoh1sRuNh0vsSgbo4uR6d9727M=
   
   needle@^2.5.2:
     version "2.9.0"
@@ -10263,6 +10311,11 @@ Lockfile:
       expand-tilde "^2.0.0"
       global-modules "^1.0.0"
   
+  resolve-from@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.npm.taobao.org/resolve-from/download/resolve-from-2.0.0.tgz#9480ab20e94ffa1d9e80a804c7ea147611966b57"
+    integrity sha1-lICrIOlP+h2egKgEx+oUdhGWa1c=
+  
   resolve-from@^4.0.0:
     version "4.0.0"
     resolved "https://registry.nlark.com/resolve-from/download/resolve-from-4.0.0.tgz"
@@ -10284,6 +10337,13 @@ Lockfile:
     version "3.0.0"
     resolved "https://registry.npm.taobao.org/resolve-pathname/download/resolve-pathname-3.0.0.tgz"
     integrity sha1-mdAiJNPPJjaJvsuzk7xWAxMCXc0=
+  
+  resolve-pkg@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.npm.taobao.org/resolve-pkg/download/resolve-pkg-1.0.0.tgz#e19a15e78aca2e124461dc92b2e3943ef93494d9"
+    integrity sha1-4ZoV54rKLhJEYdySsuOUPvk0lNk=
+    dependencies:
+      resolve-from "^2.0.0"
   
   resolve-url@^0.2.1:
     version "0.2.1"
@@ -10333,6 +10393,13 @@ Lockfile:
     integrity sha1-8aVAK6YiCtUswSgrrBrjqkn9Bho=
     dependencies:
       glob "^7.1.3"
+  
+  rimraf@~2.4.0:
+    version "2.4.5"
+    resolved "https://registry.npmmirror.com/rimraf/download/rimraf-2.4.5.tgz#ee710ce5d93a8fdb856fb5ea8ff0e2d75934b2da"
+    integrity sha1-7nEM5dk6j9uFb7Xqj/Di11k0sto=
+    dependencies:
+      glob "^6.0.1"
   
   rollup-plugin-terser@^7.0.0:
     version "7.0.2"
@@ -10429,6 +10496,16 @@ Lockfile:
       "@types/json-schema" "^7.0.8"
       ajv "^6.12.5"
       ajv-keywords "^3.5.2"
+  
+  scripty@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.npm.taobao.org/scripty/download/scripty-2.0.0.tgz#25761bb2e237a7563f705d87357db07791d38459"
+    integrity sha1-JXYbsuI3p1Y/cF2HNX2wd5HThFk=
+    dependencies:
+      async "^2.6.1"
+      glob "^7.0.3"
+      lodash "^4.17.11"
+      resolve-pkg "^1.0.0"
   
   scroll-into-view-if-needed@^2.2.25:
     version "2.2.28"
@@ -11627,6 +11704,11 @@ Lockfile:
     version "0.0.6"
     resolved "https://registry.npm.taobao.org/typedarray/download/typedarray-0.0.6.tgz"
     integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+  
+  typescript@^4.5.4:
+    version "4.5.4"
+    resolved "https://registry.npmmirror.com/typescript/download/typescript-4.5.4.tgz#a17d3a0263bf5c8723b9c52f43c5084edf13c2e8"
+    integrity sha512-VgYs2A2QIRuGphtzFV7aQJduJ2gyfTljngLzjpfW9FoYZF6xuw1W0vW9ghCKLfcWrCFxK81CSGRAvS1pn4fIUg==
   
   unbox-primitive@^1.0.1:
     version "1.0.1"

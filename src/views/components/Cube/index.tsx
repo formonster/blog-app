@@ -12,6 +12,12 @@ const cubeStyle = css`
   }
 `;
 
+type Face = {
+  className?: string;
+  style?: React.CSSProperties;
+  content?: React.ReactNode;
+}
+
 interface CubeProps {
   className?: string;
   unit?: "px" | "vw" | "%";
@@ -22,41 +28,20 @@ interface CubeProps {
   depth: number;
   style?: React.CSSProperties;
   faceStyle?: React.CSSProperties;
-  faceTop?: {
-    className?: string;
-    style?: React.CSSProperties;
-    content?: React.ReactNode;
-  };
-  faceBottom?: {
-    className?: string;
-    style?: React.CSSProperties;
-    content?: React.ReactNode;
-  };
-  faceLeft?: {
-    className?: string;
-    style?: React.CSSProperties;
-    content?: React.ReactNode;
-  };
-  faceRight?: {
-    className?: string;
-    style?: React.CSSProperties;
-    content?: React.ReactNode;
-  };
-  faceFront?: {
-    className?: string;
-    style?: React.CSSProperties;
-    content?: React.ReactNode;
-  };
-  faceAfter?: {
-    className?: string;
-    style?: React.CSSProperties;
-    content?: React.ReactNode;
-  };
+  faceTop?: Face;
+  faceBottom?: Face;
+  faceLeft?: Face;
+  faceRight?: Face;
+  faceFront?: Face;
+  faceAfter?: Face;
   // handler
   onClick?: React.MouseEventHandler<HTMLDivElement>;
 }
 
-const defaultFace = { className: "", style: {}, content: "" };
+const defaultFace: Face = { className: "", style: {
+  // backgroundColor: "rgba(0, 0, 0, .5)",
+  // border: "1px solid #ccc"
+}, content: "" };
 
 const Cube: React.FC<CubeProps> = function ({
   unit = "px",

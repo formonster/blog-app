@@ -2,11 +2,11 @@ import { RouteConfig } from "react-router-config";
 
 import * as Home from './pages/home'
 import Login from './pages/login'
+import Error from './pages/error'
 import Blog from './pages/blog'
+import Grid from './pages/grid'
 import Note from './pages/note'
 import BlogCreate from './pages/blog/create'
-
-console.log(Home.getStaticProps);
 
 const router: RouteConfig[] = [
     {
@@ -27,6 +27,12 @@ const router: RouteConfig[] = [
         component: Blog,
     },
     {
+        path: "/grid",
+        key: "/grid",
+        exact: true,
+        component: Grid,
+    },
+    {
         path: "/note",
         key: "/note",
         exact: true,
@@ -43,6 +49,12 @@ const router: RouteConfig[] = [
         key: "/login",
         exact: true,
         component: Login,
+    },
+    {
+        path: "/error",
+        key: "/error",
+        exact: true,
+        component: Error,
     },
 ]
 

@@ -63,8 +63,8 @@ module.exports = {
             asset: '[file].br',
             test: /\.(js|css)$/
         }),
-        new BundleAnalyzerPlugin({
-            analyzerPort: 8888
-        })
+        // new BundleAnalyzerPlugin({
+        //     analyzerPort: 8888
+        // })
     ]
 }

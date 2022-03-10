@@ -1,1 +1,1 @@
-export type Table = "blog" | "folder" | "note" | "user"
+export type Table = "blog" | "folder" | "folder_covers" | "note" | "user"

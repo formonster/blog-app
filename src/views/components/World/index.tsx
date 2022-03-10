@@ -1,11 +1,29 @@
 import React, { useEffect, useRef } from "react";
 import Umbrella, { HoverType } from "@/assets/lib/umbrella";
+import { css } from "@emotion/css";
+import classNames from "classnames";
 
 export type WorldProps = {
+  className?: string,
+  style?: React.CSSProperties,
   hover?: HoverType;
 };
 
-const World: React.FC<WorldProps> = function ({ children, hover }) {
+const worldStyle = css`
+  perspective: 900;
+  -webkit-perspective: 900;
+  transform-style: preserve-3d;
+
+  .umbrella-scene {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    user-select: none;
+  }
+`
+
+const World: React.FC<WorldProps> = function ({ children, hover, className, style }) {
   const world = useRef<HTMLDivElement>();
   const scene = useRef<HTMLDivElement>();
 
@@ -20,9 +38,10 @@ const World: React.FC<WorldProps> = function ({ children, hover }) {
   return (
     <div
       ref={world}
-      className="umbrella-world absolute left-0 top-0 w-full h-full"
+      className={classNames([worldStyle, className])}
+      style={style}
     >
-      <div ref={scene} className="umbrella-scene w-full h-full">
+      <div ref={scene} className="umbrella-scene w-full h-full d3">
         {children}
       </div>
     </div>

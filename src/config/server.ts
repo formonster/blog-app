@@ -1,5 +1,5 @@
 export default {
-    port: 5000,
+    port: 4500,
     secretKey: "for-cheese-secret",
     serverHost: "http://localhost:4600",
     ossServerHost: "http://localhost:6000"

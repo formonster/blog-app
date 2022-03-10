@@ -23,6 +23,7 @@ const baseConfig = {
         path: path.join(__dirname, "./dist"),
         publicPath: ASSET_PATH
     },
+    devtool: 'source-map',
     experiments: {
         topLevelAwait: true
     },
@@ -86,6 +87,7 @@ const baseConfig = {
         // }),
         new HtmlWebpackPlugin({
             template: "./public/index.html",
+            templateParameters: { mode }
         }),
     ]
 }

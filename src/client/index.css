@@ -6,7 +6,28 @@
   --color: blueviolet;
 }
 
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 @layer components {
+  .border-1 {
+    border-width: 1px;
+  }
+  .vertical-lr {
+    writing-mode: vertical-lr;
+  }
+  .center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
   .ding {
     color: var(--color);
   }
@@ -14,6 +35,10 @@
     color: yellowgreen;
   }
   .style-3d {
+    transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+  }
+  .d3 {
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
   }
@@ -35,16 +60,6 @@
   .shadow-bulge-inset {
     box-shadow: -3px -3px 3px 0 rgba(216, 216, 216, 0.1) inset,
       3px 3px 3px 0 rgba(0, 0, 0, 0.1) inset,
-      0 0 10px 0 rgba(100, 100, 100, 0.1);
-  }
-}
-.ant-input {
-  border: 0;
-
-  &:focus {
-    border: 0;
-    box-shadow: -5px -5px 5px 0 rgba(216, 216, 216, 0.1) inset,
-      5px 5px 5px 0 rgba(0, 0, 0, 0.1) inset,
       0 0 10px 0 rgba(100, 100, 100, 0.1);
   }
 }

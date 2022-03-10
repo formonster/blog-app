@@ -3,6 +3,8 @@ export default [
     "/",
     "/blogCreate",
     "/login",
+    "/grid",
+    "/error",
     "/ghost",
     "/note",
     "/blog",
