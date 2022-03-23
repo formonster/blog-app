@@ -28,13 +28,12 @@ function getAreasStyle(areas: GridData['gridLayout']["areas"]): string {
 
 const AreasEdit: React.FC<AreasEditProps> = function ({ data, output }) {
     const areaPopupCtl = usePopupCtl("area");
+    const areaStylePopupCtl = usePopupCtl("areaStyle");
 
-    const { childs = {}, areas } = data.gridLayout;
-    const { blocks } = areas;
+    const { childs = {} } = data.gridLayout;
 
-    function onChangeActive(i: number) {
+    function onChangeActive(areaName: string) {
         const _data = cloneDeep(data);
-        const areaName = blocks[i].areaName
         _data.gridLayout.childs[areaName].active = !childs[areaName].active;
 
         output(_data);
@@ -45,23 +44,58 @@ const AreasEdit: React.FC<AreasEditProps> = function ({ data, output }) {
      * @param gridData 配置参数
      */
     function getAreasNode(gridData: GridData) {
-        return gridData.gridLayout.areas.blocks.map((block, i) => {
-            let { areaName } = block;
-            const self = childs[areaName];
-
+        return Object.entries(childs).map(([areaName, self], i) => {
             if (self && self.gridLayout) {
                 return (
                     <div
                         key={areaName}
                         className={classNames(['grid-item', self.active && 'active'])}
                         id={areaName}
-                        style={{ gridArea: areasPrefix + areaName }}>
+                        style={{ gridArea: areasPrefix + areaName, ...gridData.style }}>
                         <GridEdit active={self.active} name={areaName} data={self} output={(data) => {
                             childs[areaName] = { ...data }
                             output({ ...gridData })
                         }} />
                     </div>
                 )
+            }
+
+            function changeName() {
+                areaPopupCtl.show({
+                    title: '修改名称',
+                    formData: { name: areaName },
+                    onChange: ({ name }: { name: string }) => {
+                        if (name === areaName) return;
+
+                        if (!gridData.gridLayout.childs) gridData.gridLayout.childs = {};
+
+                        if (gridData.gridLayout.childs[areaName]) {
+                            gridData.gridLayout.childs[name] = gridData.gridLayout.childs[areaName]
+                            delete gridData.gridLayout.childs[areaName];
+                            output({ ...data })
+                            return
+                        }
+
+                        const [x, y] = areaName.split('x');
+                        gridData.gridLayout.childs[name] = {
+                            rowStart: parseInt(x),
+                            rowEnd: parseInt(x) + 1,
+                            colStart: parseInt(y),
+                            colEnd: parseInt(y) + 1,
+                        }
+                        output({ ...data })
+                    },
+                });
+            }
+
+            function changeStyle() {
+                areaStylePopupCtl.show({
+                    title: '修改样式',
+                    onChange: (style: React.CSSProperties) => {
+                        gridData.gridLayout.childs[areaName].style = style;
+                        output({ ...data })
+                    }
+                })
             }
 
             return (
@@ -72,35 +106,11 @@ const AreasEdit: React.FC<AreasEditProps> = function ({ data, output }) {
                     <Dropdown
                         overlay={(
                             <Menu>
-                                <Menu.Item key="1" onClick={() => {
-                                    areaPopupCtl.show({
-                                        title: '修改名称',
-                                        formData: { name: areaName },
-                                        onChange: ({ name }: { name: string }) => {
-                                            if (name === areaName) return;
-
-                                            block.areaName = name;
-                                            if (!gridData.gridLayout.childs) gridData.gridLayout.childs = {};
-
-                                            if (gridData.gridLayout.childs[areaName]) {
-                                                gridData.gridLayout.childs[name] = gridData.gridLayout.childs[areaName]
-                                                delete gridData.gridLayout.childs[areaName];
-                                                output({ ...data })
-                                                return
-                                            }
-
-                                            const [x, y] = areaName.split('x');
-                                            gridData.gridLayout.childs[name] = {
-                                                rowStart: parseInt(x),
-                                                rowEnd: parseInt(x) + 1,
-                                                colStart: parseInt(y),
-                                                colEnd: parseInt(y) + 1,
-                                            }
-                                            output({ ...data })
-                                        },
-                                    });
-                                }}>
+                                <Menu.Item onClick={changeName}>
                                     修改名称
+                                </Menu.Item>
+                                <Menu.Item onClick={changeStyle}>
+                                    修改样式
                                 </Menu.Item>
                             </Menu>
                         )}
@@ -109,8 +119,8 @@ const AreasEdit: React.FC<AreasEditProps> = function ({ data, output }) {
                             key={areaName}
                             className={classNames(['grid-item', self && self.active && 'active'])}
                             id={areaName}
-                            style={{ gridArea: areasPrefix + areaName }}
-                            onClick={onChangeActive.bind(null, i)}>
+                            style={{ gridArea: areasPrefix + areaName, ...gridData.style }}
+                            onClick={onChangeActive.bind(null, areaName)}>
                             <p className="select-none text-blue-200 text-xl">{areaName}</p>
                         </div>
                     </Dropdown>

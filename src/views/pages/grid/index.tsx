@@ -53,7 +53,7 @@ const Home: FC = function () {
 
     return (
         <div className="w-screen h-screen flex">
-            <GridLayer className="w-1/6 border-r-2" data={gridLayout} output={setGridLayoutHandler} />
+            <GridLayer className="w-1/6 border-r-2 h-screen overflow-auto" data={gridLayout} output={setGridLayoutHandler} />
             <GridEdit active={gridLayout.active} className="w-full" name="root" data={gridLayout} output={setGridLayoutHandler} />
         </div>
     );

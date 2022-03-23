@@ -6,7 +6,7 @@ import { cloneDeep } from "lodash";
 import { Dropdown, Menu } from "antd";
 import { defaultGridData } from "./libs/utils";
 import classNames from "classnames";
-import { sortDescArrayItem } from "@/utils/array";
+import { sortDescObjectItem, sortAscObjectItem } from "@/utils/array";
 
 interface AxisEditProps {
     visible?: boolean;
@@ -110,8 +110,9 @@ const AxisEdit: React.FC<AxisEditProps> = function ({
         setRightClickItem(visible ? { type, index } : undefined);
     }
 
-    // TODO: 目前排序不太对，会发生覆盖问题，应该从右下角的单元开始更改位置
     function insertCloumn(index: number, rowNum: number, data: GridData, insertNum: number = 1) {
+        if (!data.gridLayout.childs) return;
+
         // 计算插入的单元格下标
         let insertItems = [];
         for (let x = 0; x < insertNum; x++) {
@@ -121,15 +122,14 @@ const AxisEdit: React.FC<AxisEditProps> = function ({
         }
 
         // 修改现有的 childs
-        const childsArr = sortDescArrayItem(Object.entries(data.gridLayout.childs), 1)
-        console.log("准备子元素数组", childsArr);
+        const childsArr = sortDescObjectItem(Object.entries(data.gridLayout.childs), '[1].colStart')
         childsArr.forEach(([name, child]) => {
             const indexName = `${child.rowStart}x${child.colStart}`;
             const isIndexName = name === indexName
             if (child.colStart >= index) {
                 child.colStart += insertNum;
                 child.colEnd += insertNum;
-            }
+            } else return
             if (isIndexName) {
                 if (data.gridLayout.childs[`${child.rowStart}x${child.colStart}`]) {
                     console.error('单元格发生了覆盖，请检查列表：', childsArr)
@@ -137,7 +137,6 @@ const AxisEdit: React.FC<AxisEditProps> = function ({
                 }
                 data.gridLayout.childs[`${child.rowStart}x${child.colStart}`] = child;
                 delete data.gridLayout.childs[indexName]
-                console.log('更改 childs', cloneDeep(data.gridLayout.childs));
             }
         })
 
@@ -154,6 +153,8 @@ const AxisEdit: React.FC<AxisEditProps> = function ({
     }
 
     function insertRow(index: number, colNum: number, data: GridData, insertNum: number = 1) {
+        if (!data.gridLayout.childs) return;
+
         // 计算插入的单元格下标
         let insertItems = [];
         for (let x = 0; x < insertNum; x++) {
@@ -163,15 +164,14 @@ const AxisEdit: React.FC<AxisEditProps> = function ({
         }
 
         // 修改现有的 childs
-        const childsArr = sortDescArrayItem(Object.entries(data.gridLayout.childs), 1)
-        console.log("准备子元素数组", childsArr);
+        const childsArr = sortDescObjectItem(Object.entries(data.gridLayout.childs), '[1].rowStart')
         childsArr.forEach(([name, child]) => {
             const indexName = `${child.rowStart}x${child.colStart}`;
             const isIndexName = name === indexName
             if (child.rowStart >= index) {
                 child.rowStart += insertNum;
                 child.rowEnd += insertNum;
-            }
+            } else return
             if (isIndexName) {
                 if (data.gridLayout.childs[`${child.rowStart}x${child.colStart}`]) {
                     console.error('单元格发生了覆盖，请检查列表：', childsArr)
@@ -179,7 +179,6 @@ const AxisEdit: React.FC<AxisEditProps> = function ({
                 }
                 data.gridLayout.childs[`${child.rowStart}x${child.colStart}`] = child;
                 delete data.gridLayout.childs[indexName]
-                console.log('更改 childs', cloneDeep(data.gridLayout.childs));
             }
         })
 
@@ -191,6 +190,62 @@ const AxisEdit: React.FC<AxisEditProps> = function ({
                 rowEnd: parseInt(x) + 1,
                 colStart: parseInt(y),
                 colEnd: parseInt(y) + 1,
+            }
+        })
+    }
+
+    function removeCloumn(index: number, data: GridData, removeNum: number = 1) {
+        if (!data.gridLayout.childs) return;
+        Object.entries(data.gridLayout.childs).forEach(([name, child]) => {
+            if (child.colStart >= index && child.colEnd <= index + removeNum) {
+                delete data.gridLayout.childs[name]
+            }
+        })
+
+        // 修改现有的 childs
+        const childsArr = sortAscObjectItem(Object.entries(data.gridLayout.childs), '[1].colStart')
+        childsArr.forEach(([name, child]) => {
+            const indexName = `${child.rowStart}x${child.colStart}`;
+            const isIndexName = name === indexName
+            if (child.colStart > index) {
+                child.colStart -= removeNum;
+                child.colEnd -= removeNum;
+            } else return
+            if (isIndexName) {
+                if (data.gridLayout.childs[`${child.rowStart}x${child.colStart}`]) {
+                    console.error('单元格发生了覆盖，请检查列表：', `${child.rowStart}x${child.colStart}`, childsArr)
+                    return
+                }
+                data.gridLayout.childs[`${child.rowStart}x${child.colStart}`] = child;
+                delete data.gridLayout.childs[indexName]
+            }
+        })
+    }
+
+    function removeRow(index: number, data: GridData, removeNum: number = 1) {
+        if (!data.gridLayout.childs) return;
+        Object.entries(data.gridLayout.childs).forEach(([name, child]) => {
+            if (child.rowStart >= index && child.rowEnd <= index + removeNum) {
+                delete data.gridLayout.childs[name]
+            }
+        })
+
+        // 修改现有的 childs
+        const childsArr = sortAscObjectItem(Object.entries(data.gridLayout.childs), '[1].rowStart')
+        childsArr.forEach(([name, child]) => {
+            const indexName = `${child.rowStart}x${child.colStart}`;
+            const isIndexName = name === indexName
+            if (child.rowStart >= index) {
+                child.rowStart -= removeNum;
+                child.rowEnd -= removeNum;
+            }
+            if (isIndexName) {
+                if (data.gridLayout.childs[`${child.rowStart}x${child.colStart}`]) {
+                    console.error('单元格发生了覆盖，请检查列表：', childsArr)
+                    return
+                }
+                data.gridLayout.childs[`${child.rowStart}x${child.colStart}`] = child;
+                delete data.gridLayout.childs[indexName]
             }
         })
     }
@@ -227,9 +282,23 @@ const AxisEdit: React.FC<AxisEditProps> = function ({
         const _data = cloneDeep(data);
         const { type, index } = rightClickItem;
         if (type === 'row') {
+            // 如果已经剩最后一列了，就把整个 gridLayout 删掉
+            if (_data.gridLayout.columns.length === 1) {
+                delete _data.gridLayout;
+                output(_data);
+                return;
+            }
             _data.gridLayout.columns.splice(index, 1)
+            removeCloumn(index, _data)
         } else {
+            // 如果已经剩最后一行了，就把整个 gridLayout 删掉
+            if (_data.gridLayout.rows.length === 1) {
+                delete _data.gridLayout;
+                output(_data);
+                return;
+            }
             _data.gridLayout.rows.splice(index, 1)
+            removeRow(index, _data)
         }
         output(_data);
     }

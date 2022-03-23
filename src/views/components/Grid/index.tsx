@@ -43,9 +43,9 @@ export type GridData = {
     }
     areas?: {
       style: string[][];
-      blocks: Block[];
     };
   }
+  style?: React.CSSProperties
   rowStart?: number
   colStart?: number
   rowEnd?: number

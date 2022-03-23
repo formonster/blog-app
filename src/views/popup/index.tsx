@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { popups } from "@/store/popup";
 import asyncComponent from "@/views/components/AsyncComponent";
 
@@ -7,6 +7,7 @@ const popupsComponent: { [key: string]: React.ReactNode } = {
     table: asyncComponent(() => import('./childs/table')),
     axis: asyncComponent(() => import('./childs/axis')),
     area: asyncComponent(() => import('./childs/area')),
+    areaStyle: asyncComponent(() => import('./childs/areaStyle')),
     demo: asyncComponent(() => import('./childs/demo')),
 }
 

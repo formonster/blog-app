@@ -17,10 +17,7 @@ const GridLayer: React.FC<GridLayerProps> = function ({ className, data, output 
     const gridData = cloneDeep(data);
     child2Areas(gridData)
 
-    console.log('GridLayer', gridData);
-
-    const { childs, areas } = gridData.gridLayout;
-    const { blocks } = areas;
+    const { childs } = gridData.gridLayout;
 
     const blockChange = (areaName: string, data: GridData) => {
         childs[areaName] = data;
@@ -44,20 +41,20 @@ const GridLayer: React.FC<GridLayerProps> = function ({ className, data, output 
 
     return (
         <div className={className}>
-            {blocks.map((block, i) => {
-                if (!childs[block.areaName]) console.log('error', block.areaName, childs);
-                if (childs[block.areaName] && childs[block.areaName].gridLayout) {
+            {Object.entries(childs).map(([areaName], i) => {
+                if (!childs[areaName]) console.log('error', areaName, childs);
+                if (childs[areaName] && childs[areaName].gridLayout) {
                     return (
-                        <div key={block.areaName}>
-                            <BlockItem key={block.areaName} name={block.areaName} data={childs[block.areaName]} output={blockChange.bind(null, block.areaName)} onDoubleClick={onDoubleClickHandler.bind(null, block.areaName)} />
-                            <GridLayer className="pl-3 bg-blue-500 bg-opacity-10" data={childs[block.areaName]} output={newData => {
-                                childs[block.areaName] = newData;
+                        <div key={areaName}>
+                            <BlockItem key={areaName} name={areaName} data={childs[areaName]} output={blockChange.bind(null, areaName)} onDoubleClick={onDoubleClickHandler.bind(null, areaName)} />
+                            <GridLayer className="pl-3 bg-blue-500 bg-opacity-10" data={childs[areaName]} output={newData => {
+                                childs[areaName] = newData;
                                 output({ ...gridData })
                             }} />
                         </div>
                     )
                 }
-                return <BlockItem key={block.areaName} name={block.areaName} data={childs[block.areaName]} output={blockChange.bind(null, block.areaName)} onDoubleClick={onDoubleClickHandler.bind(null, block.areaName)} />
+                return <BlockItem key={areaName} name={areaName} data={childs[areaName]} output={blockChange.bind(null, areaName)} onDoubleClick={onDoubleClickHandler.bind(null, areaName)} />
             })}
         </div>
     );

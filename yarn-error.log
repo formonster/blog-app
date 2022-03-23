@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.22.4/libexec/bin/yarn.js add @types/react-dom.
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.22.4/libexec/bin/yarn.js add antd
 
 PATH: 
-  /Users/for/Desktop/File/Flutter/flutter/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/for/Desktop/File/Flutter/flutter/bin:/Users/for/Library/Android/sdk/tools:/Users/for/Library/Android/sdk/tools/bin:/Users/for/Library/Android/sdk/platform-tools:/Users/for/Library/Android/sdk/emulator:/Users/for/Desktop/Tools/ffmpeg:/Users/for/Desktop/Tools/sonar-scanner-4.4.0.2170-macosx/bin:/usr/local/mysql/bin:/Users/for/Library/Android/sdk/tools:/Users/for/Library/Android/sdk/tools/bin:/Users/for/Library/Android/sdk/platform-tools:/Users/for/Library/Android/sdk/emulator:/Users/for/Desktop/Tools/ffmpeg:/Users/for/Desktop/Tools/sonar-scanner-4.4.0.2170-macosx/bin:/usr/local/mysql/bin:/Users/for/Desktop/File/Flutter/flutter/bin
+  /Users/for/.autojump/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/for/.autojump/bin
 
 Yarn version: 
   1.22.4
@@ -14,17 +14,8 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.npm.taobao.org/@types%2freact-dom.: Not found
-      at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:66987:18)
-      at Request.self.callback (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:140748:22)
-      at Request.emit (events.js:314:20)
-      at Request.<anonymous> (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:141720:10)
-      at Request.emit (events.js:314:20)
-      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:141642:12)
-      at Object.onceWrapper (events.js:420:28)
-      at IncomingMessage.emit (events.js:326:22)
-      at endReadableNT (_stream_readable.js:1241:12)
-      at processTicksAndRejections (internal/process/task_queues.js:84:21)
+  Error: connect ECONNREFUSED 127.0.0.1:4873
+      at TCPConnectWrap.afterConnect [as oncomplete] (net.js:1144:16)
 
 npm manifest: 
   {
@@ -63,7 +54,9 @@ npm manifest:
       "@types/koa-static-cache": "^5.1.1",
       "@types/koa-webpack": "^6.0.4",
       "@types/koa__router": "^8.0.4",
+      "@types/lodash": "^4.14.178",
       "@types/mysql": "^2.15.18",
+      "@types/react-dom": "^17.0.11",
       "@types/react-router-config": "^5.0.3",
       "@types/react-router-dom": "^5.1.8",
       "@types/uuid": "^8.3.0",
@@ -89,6 +82,7 @@ npm manifest:
       "koa-webpack": "^6.0.0",
       "lazysizes": "^5.3.2",
       "less": "^4.1.1",
+      "lodash": "^4.17.21",
       "log4js": "^6.3.0",
       "marked": "^3.0.7",
       "module-alias": "^2.2.2",
@@ -2037,6 +2031,11 @@ Lockfile:
     dependencies:
       "@types/koa" "*"
   
+  "@types/lodash@^4.14.178":
+    version "4.14.178"
+    resolved "https://registry.npmmirror.com/@types/lodash/-/lodash-4.14.178.tgz#341f6d2247db528d4a13ddbb374bcdc80406f4f8"
+    integrity sha512-0d5Wd09ItQWH1qFbEyQ7oTQ3GZrMfth5JkbN3EvTKLXcHLRDSXeLnlvlOn0wvxVIwK5o2M8JzP/OWz7T3NRsbw==
+  
   "@types/marked@^3.0.1":
     version "3.0.1"
     resolved "https://registry.nlark.com/@types/marked/download/@types/marked-3.0.1.tgz?cache=0&sync_timestamp=1631544042142&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fmarked%2Fdownload%2F%40types%2Fmarked-3.0.1.tgz"
@@ -2112,6 +2111,13 @@ Lockfile:
     version "1.2.3"
     resolved "https://registry.nlark.com/@types/range-parser/download/@types/range-parser-1.2.3.tgz?cache=0&sync_timestamp=1621242291785&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Frange-parser%2Fdownload%2F%40types%2Frange-parser-1.2.3.tgz"
     integrity sha1-fuMwunyq+5gJC+zoal7kQRWQTCw=
+  
+  "@types/react-dom@^17.0.11":
+    version "17.0.11"
+    resolved "https://registry.npmmirror.com/@types/react-dom/download/@types/react-dom-17.0.11.tgz#e1eadc3c5e86bdb5f7684e00274ae228e7bcc466"
+    integrity sha512-f96K3k+24RaLGVu/Y2Ng3e1EbZ8/cVJvypZWd7cy0ofCBaf2lcM46xNhycMZ2xGwbBjRql7hOlZ+e2WlJ5MH3Q==
+    dependencies:
+      "@types/react" "*"
   
   "@types/react-router-config@^5.0.3":
     version "5.0.3"
