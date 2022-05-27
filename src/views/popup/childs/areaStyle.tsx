@@ -3,6 +3,7 @@ import { Drawer } from "antd";
 import { usePopup } from "@/store/popup";
 import CustomForm, { CustomFormColumn } from "@/views/components/CustomForm";
 import { UnitType } from "@/views/components/Grid";
+import { firstChar2UpperCase } from "@/utils/string";
 
 type AreaModalFormData = {
   value: string
@@ -28,7 +29,7 @@ const AreaModal: FC = function () {
       span: 12,
       type: "input",
       label: "外边距",
-      name: "marging",
+      name: "margin",
     },
     {
       divider: true,
@@ -36,7 +37,7 @@ const AreaModal: FC = function () {
       orientation: "left"
     },
     {
-      span: 12,
+      span: 18,
       type: "checkbox",
       labelCol: { span: 24 },
       checkboxProps: {
@@ -49,9 +50,17 @@ const AreaModal: FC = function () {
       },
       label: "边框",
       name: "border",
+      format: (self = [], formData) => {
+        if (self.length) {
+          self.forEach((value: string) => {
+            formData[`border${firstChar2UpperCase(value)}Width`] = formData.borderWidth + 'px';
+          })
+        }
+        return formData;
+      }
     },
     {
-      span: 12,
+      span: 6,
       labelCol: { span: 24 },
       type: "input",
       label: "宽度",
@@ -76,6 +85,7 @@ const AreaModal: FC = function () {
         destroyOnClose
       >
         <CustomForm columns={columns} defaultValue={popup.formData} onChange={(data: AreaModalFormData) => {
+          console.log(data);
           popup.onChange(data)
           popupCtl.hide()
         }} />

@@ -13,7 +13,7 @@ export type CustomFormItemType =
   | "upload"
   | "uploadImg";
 
-export interface CustomFormItem extends FormItemProps<any> {
+export interface CustomFormItem<T = any> extends FormItemProps<T> {
   span?: ColProps['span']
   type: CustomFormItemType;
   label: string;
@@ -35,6 +35,7 @@ export interface CustomFormItem extends FormItemProps<any> {
     maxCount?: number;
   };
   render?: (value: any, item: object, index: number) => React.ReactNode;
+  format?: (self: any, forData: T) => any
 };
 
 export interface DividerItem extends DividerProps {
@@ -79,6 +80,10 @@ const CustomForm: FC<CustomFormProps> = ({ columns, gutter = 16, defaultValue, o
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
+    columns.forEach(item => {
+      if ('format' in item) values = item.format(values[item.name], values);
+    })
+    console.log("Format:", values);
     onChange(values);
   };
 

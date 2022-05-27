@@ -1,8 +1,8 @@
 import { get } from "lodash";
 
-export function sortAscObjectItem(arr: any[], field: string) {
-    function compare(path: string) {
-        return function (a: object, b: object) {
+export function sortAscObjectItem<T>(arr: T[], field: string): T[] {
+    function compare(path: string): (a: T, b: T) => number {
+        return function (a, b) {
             var value1 = path ? get(a, path) : a;
             var value2 = path ? get(b, path) : b;
             return value1 - value2;
@@ -11,9 +11,9 @@ export function sortAscObjectItem(arr: any[], field: string) {
     return arr.sort(compare(field))
 }
 
-export function sortAscArrayItem(arr: any[], index: number) {
-    function compare(index: number) {
-        return function (a: any[], b: any[]) {
+export function sortAscArrayItem<T extends any[]>(arr: T[], index: number): T[] {
+    function compare(index: number): (a: T, b: T) => number {
+        return function (a, b) {
             var value1 = a[index];
             var value2 = b[index];
             return value1 - value2;
@@ -22,9 +22,9 @@ export function sortAscArrayItem(arr: any[], index: number) {
     return arr.sort(compare(index))
 }
 
-export function sortDescObjectItem(arr: any[], field: string) {
-    function compare(path: string) {
-        return function (a: object, b: object) {
+export function sortDescObjectItem<T>(arr: T[], field: string): T[] {
+    function compare(path: string): (a: T, b: T) => number {
+        return function (a, b) {
             var value1 = path ? get(a, path) : a;
             var value2 = path ? get(b, path) : b;
             return value2 - value1;
@@ -33,8 +33,8 @@ export function sortDescObjectItem(arr: any[], field: string) {
     return arr.sort(compare(field))
 }
 
-export function sortDescArrayItem(arr: any[], index: number) {
-    function compare(index: number) {
+export function sortDescArrayItem<T extends any[]>(arr: T[], index: number): T[] {
+    function compare(index: number): (a: T, b: T) => number {
         return function (a: any[], b: any[]) {
             var value1 = a[index];
             var value2 = b[index];

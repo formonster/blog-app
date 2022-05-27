@@ -2,6 +2,11 @@ import React, { FC } from "react";
 import { css } from "@emotion/css";
 import classNames from "classnames";
 
+export type GridEvent = {
+  type: string
+  data: any;
+}
+
 export enum UnitType {
   /** 百分比 */
   PERCENTAGE = "%",
@@ -45,6 +50,7 @@ export type GridData = {
       style: string[][];
     };
   }
+  activeItemPath?: string
   style?: React.CSSProperties
   rowStart?: number
   colStart?: number

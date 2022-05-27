@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import { GridData, UnitType } from "@/views/components/Grid";
+import { GridData, GridEvent, UnitType } from "@/views/components/Grid";
 import { css } from "@emotion/css";
 import classNames from "classnames";
 import { Dropdown, Menu } from "antd";
 import GridEdit from "./index";
 import AxisEdit from "./AxisEdit";
+import { areasPrefix } from "./consts";
 import { usePopupCtl } from "@/store/popup";
 import { cloneDeep } from "lodash";
+import { sortAscObjectItem } from "@/utils/array";
 
 interface AreasEditProps {
     data?: GridData;
-    output?: (data: GridData) => void;
+    output?: (data: GridData, event?: GridEvent) => void;
 }
-
-const areasPrefix = "area_"
 
 /**
  * 生成 grid-template-areas 样式
@@ -36,7 +36,12 @@ const AreasEdit: React.FC<AreasEditProps> = function ({ data, output }) {
         const _data = cloneDeep(data);
         _data.gridLayout.childs[areaName].active = !childs[areaName].active;
 
-        output(_data);
+        output(_data, {
+            type: 'change-active',
+            data: {
+                areaName,
+            }
+        });
     }
 
     /**
@@ -44,19 +49,13 @@ const AreasEdit: React.FC<AreasEditProps> = function ({ data, output }) {
      * @param gridData 配置参数
      */
     function getAreasNode(gridData: GridData) {
-        return Object.entries(childs).map(([areaName, self], i) => {
+        return sortAscObjectItem(sortAscObjectItem(Object.entries(childs), '[1].rowStart'), '[1].colStart').map(([areaName, self], i) => {
             if (self && self.gridLayout) {
                 return (
-                    <div
-                        key={areaName}
-                        className={classNames(['grid-item', self.active && 'active'])}
-                        id={areaName}
-                        style={{ gridArea: areasPrefix + areaName, ...gridData.style }}>
-                        <GridEdit active={self.active} name={areaName} data={self} output={(data) => {
-                            childs[areaName] = { ...data }
-                            output({ ...gridData })
-                        }} />
-                    </div>
+                    <GridEdit active={self.active} name={areaName} data={self} output={(data) => {
+                        childs[areaName] = { ...data }
+                        output({ ...gridData })
+                    }} />
                 )
             }
 
@@ -91,6 +90,7 @@ const AreasEdit: React.FC<AreasEditProps> = function ({ data, output }) {
             function changeStyle() {
                 areaStylePopupCtl.show({
                     title: '修改样式',
+                    formData: self.style,
                     onChange: (style: React.CSSProperties) => {
                         gridData.gridLayout.childs[areaName].style = style;
                         output({ ...data })
@@ -119,7 +119,7 @@ const AreasEdit: React.FC<AreasEditProps> = function ({ data, output }) {
                             key={areaName}
                             className={classNames(['grid-item', self && self.active && 'active'])}
                             id={areaName}
-                            style={{ gridArea: areasPrefix + areaName, ...gridData.style }}
+                            style={{ gridArea: areasPrefix + areaName, ...self.style }}
                             onClick={onChangeActive.bind(null, areaName)}>
                             <p className="select-none text-blue-200 text-xl">{areaName}</p>
                         </div>
@@ -150,7 +150,6 @@ const AreasEdit: React.FC<AreasEditProps> = function ({ data, output }) {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100%;
             height: 100%;
             font-size: 50px;
 

@@ -41,7 +41,6 @@ const Home: FC = function () {
 
     const setGridLayoutHandler = (data: GridData) => {
         delete data.gridLayout.areas;
-        console.log('setGridLayoutHandler', data);
         setGridLayout({ ...data });
     }
 
